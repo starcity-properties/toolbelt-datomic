@@ -101,6 +101,12 @@
 ;; =============================================================================
 
 
+(defn conn?
+  "Is `x` a Datomic connection?"
+  [x]
+  (instance? datomic.Connection x))
+
+
 (defn db? [x]
   (satisfies? DatabaseReference x))
 
