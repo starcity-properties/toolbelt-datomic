@@ -1,4 +1,4 @@
-(defproject starcity/toolbelt-datomic "0.2.0-SNAPSHOT"
+(defproject starcity/toolbelt-datomic "0.2.0"
   :description "Utility functinos for working with datomic."
   :url "https://github.com/starcity-properties/toolbelt-datomic"
   :license {:name "Eclipse Public License"
