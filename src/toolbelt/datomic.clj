@@ -207,13 +207,14 @@
   (:db/txInstant (eav-tx db e a v)))
 
 
-(defn mapify [e]
+(defn mapify
   "Convert a Datomic entity to a Clojure map."
+  [e]
   (reduce
    (fn [acc [a v]]
      (cond
-       (set? v)        (assoc acc a (map mapify v))
+       (set? v)     (assoc acc a (map mapify v))
        (entityd? v) (assoc acc a (mapify v))
-       :otherwise      (assoc acc a v)))
+       :otherwise   (assoc acc a v)))
    nil
    e))
