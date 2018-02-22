@@ -212,9 +212,12 @@
   [e]
   (reduce
    (fn [acc [a v]]
-     (cond
-       (set? v)     (assoc acc a (map mapify v))
-       (entityd? v) (assoc acc a (mapify v))
-       :otherwise   (assoc acc a v)))
+     (let [acc (cond
+                 (set? v)     (assoc acc a (map mapify v))
+                 (entityd? v) (assoc acc a (mapify v))
+                 :otherwise   (assoc acc a v))]
+       (if (entityd? e)
+         (assoc acc :db/id (:db/id e))
+         acc)))
    nil
    e))
