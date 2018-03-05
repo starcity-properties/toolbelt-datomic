@@ -27,6 +27,12 @@
      ~@body))
 
 
+(defn set-partition!
+  "Set the partition to `part`."
+  [part]
+  (alter-var-root #'*part* (constantly part)))
+
+
 ;; schema =======================================================================
 
 
