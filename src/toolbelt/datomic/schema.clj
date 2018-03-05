@@ -1,7 +1,6 @@
 (ns toolbelt.datomic.schema
   (:require [clojure.spec.alpha :as s]
             [clojure.tools.macro :as ctm]
-            [clojure.tools.namespace.find :as nfind]
             [datomic.api :as d]
             [io.rkn.conformity :as c]))
 
@@ -103,10 +102,10 @@
 
 
 (defn compile-schemas
-  "Compile all schemas found by recursively traversing `dir` for schema
-  definitions into one map of conformity norms."
-  [dir]
-  (->> (nfind/find-namespaces-in-dir dir)
+  "Compile all schemas found in `namespaces` for schema definitions into one map
+  of conformity norms."
+  [& namespaces]
+  (->> namespaces
        (map compile-schema)
        (apply merge)))
 
