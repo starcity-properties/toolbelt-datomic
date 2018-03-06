@@ -1,6 +1,7 @@
 (ns toolbelt.datomic
   (:require [datomic.api :as d]
-            [clojure.spec.alpha :as s]))
+            [clojure.spec.alpha :as s]
+            [clojure.string :as string]))
 
 
 ;; =============================================================================
@@ -149,6 +150,16 @@
   [{args :args :as m}]
   {:query (dissoc m :args)
    :args args})
+
+
+(defn safe-wildcard
+  "Produce a function for performing fulltext search with a wildcard
+  character (*) that won't throw errors."
+  [q]
+  (fn [args]
+    (if (= (last q) \space)
+      (conj args (string/trim q))
+      (conj args (str q "*")))))
 
 
 (defn updated-at
