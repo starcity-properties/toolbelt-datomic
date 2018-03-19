@@ -126,9 +126,9 @@
 
 
 (defn entities
-  "Maps `entity` over `entids`, producing a vector of entities."
+  "Maps `entity` over `entids`, producing a seq of entities."
   [db & entids]
-  (mapv
+  (map
    (fn [entid]
      (entity entid db))
    entids))
