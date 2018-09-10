@@ -126,9 +126,9 @@
 
 
 (defn entities
-  "Maps `entity` over `entids`, producing a vector of entities."
+  "Maps `entity` over `entids`, producing a seq of entities."
   [db & entids]
-  (mapv
+  (map
    (fn [entid]
      (entity entid db))
    entids))
@@ -224,9 +224,9 @@
   (reduce
    (fn [acc [a v]]
      (let [acc (cond
-                 (set? v)     (assoc acc a (map mapify v))
-                 (entityd? v) (assoc acc a (mapify v))
-                 :otherwise   (assoc acc a v))]
+                 (and (set? v) (every? entityd? v)) (assoc acc a (map mapify v))
+                 (entityd? v)                       (assoc acc a (mapify v))
+                 :otherwise                         (assoc acc a v))]
        (if (entityd? e)
          (assoc acc :db/id (:db/id e))
          acc)))
