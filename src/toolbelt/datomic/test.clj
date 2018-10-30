@@ -48,6 +48,14 @@
          (test-fn))))))
 
 
+(defn conn
+  "Returns the Datomic connection that was setup in 'conn-fixture'."
+  []
+  (when-not *conn*
+    (throw (ex-info "Datomic connection not initialized, use conn-fixture." {})))
+  *conn*)
+
+
 ;; ==============================================================================
 ;; schema validation ============================================================
 ;; ==============================================================================
