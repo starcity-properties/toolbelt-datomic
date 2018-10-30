@@ -56,6 +56,15 @@
   *conn*)
 
 
+(defn transaction
+  "A fixture that transacts `tx-data` into the database."
+  [& tx-data]
+  (fn [test-fn]
+    (with-conn conn
+      @(d/transact conn tx-data)
+      (test-fn))))
+
+
 ;; ==============================================================================
 ;; schema validation ============================================================
 ;; ==============================================================================
