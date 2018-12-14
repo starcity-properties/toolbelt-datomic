@@ -1,6 +1,7 @@
 (ns toolbelt.datomic.test
   (:require [datomic.api :as d]
-            [clojure.test :refer :all]))
+            [clojure.test :refer :all]
+            [toolbelt.datomic.schema :as tds]))
 
 
 ;; ==============================================================================
@@ -42,10 +43,11 @@
    (conn-fixture identity))
   ([txn-fn]
    (fn [test-fn]
-     (with-conn r
-       (binding [*conn* r]
-         (txn-fn r)
-         (test-fn))))))
+     (tds/with-partition :db.part/user
+       (with-conn r
+         (binding [*conn* r]
+           (txn-fn r)
+           (test-fn)))))))
 
 
 (defn conn
