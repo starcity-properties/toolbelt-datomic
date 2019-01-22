@@ -93,8 +93,9 @@
 
 (defn compile-schema
   "Compile all schemas in `namespace` into a map of conformity norms."
-  [namespace]
-  (let [norms (->> (read-schema namespace)
+  [namespace & {:keys [read-schema-fn]
+                :or   {read-schema-fn read-schema}}]
+  (let [norms (->> (read-schema-fn namespace)
                    (map second)
                    (assemble-norms))]
     (assert (s/valid? ::norms norms) (s/explain-str ::norms norms))
