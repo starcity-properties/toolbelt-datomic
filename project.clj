@@ -8,5 +8,10 @@
                  [org.clojure/tools.macro "0.1.2"]
                  [com.datomic/datomic-free "0.9.5544" :scope "provided"]
                  [io.rkn/conformity "0.5.1"]]
-  :deploy-repositories [["releases" {:url   "https://clojars.org/repo"
-                                     :creds :gpg}]])
+  :plugins [[s3-wagon-private "1.2.0"]]
+  :deploy-repositories {"releases"  {:url        "s3://starjars/releases"
+                                     :username   :env/aws_access_key
+                                     :passphrase :env/aws_secret_key}
+                        "snapshots" {:url        "s3://starjars/snapshots"
+                                     :username   :env/aws_access_key
+                                     :passphrase :env/aws_secret_key}})
